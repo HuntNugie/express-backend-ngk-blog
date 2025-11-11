@@ -25,14 +25,14 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const {email, password} = req.body;
-        const result = await Users.findMany({
+        const result = await Users.findUnique({
             where: {email: email},
         });
         
         // cek data
         if(!result){
             return res.status(404).json({
-                message:"anda belum pernah login"
+                message:"registrasi terlebih dahulu"
             });
         }
 
@@ -50,7 +50,8 @@ export const login = async (req, res) => {
         res.cookie("token",token,{
             httpOnly:true,
             secure:true,
-            sameSite:"none"
+            sameSite:"none",
+            expires: new Date(Date.now() + 1000 * 60 * 10)
         });
         return res.status(200).json({message:"berhasil login"});
     } catch (error) {
