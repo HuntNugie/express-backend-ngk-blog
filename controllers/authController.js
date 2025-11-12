@@ -2,6 +2,7 @@ import {Users} from "../models/User.model.js";
 import {hash,compare} from "bcrypt";
 import jwt from "jsonwebtoken";
 import {config} from "dotenv";
+config();
 export const register = async (req, res) => {
     try {
         const {nama, email, password, confirmPass} = req.body;
@@ -21,18 +22,9 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const {email, password} = req.body;
-        const result = await Users.findUnique({
-            where: {email: email},
-        });
+        const {password} = req.body;
+        const result = req.user;
         
-        // cek data
-        if(!result){
-            return res.status(404).json({
-                message:"registrasi terlebih dahulu"
-            });
-        }
-
         // cek apakah password yang ada di user itu benar
         const hasil = await compare(password,result.password);
         if(!hasil){
