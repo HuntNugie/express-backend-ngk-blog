@@ -5,9 +5,6 @@ import {config} from "dotenv";
 export const register = async (req, res) => {
     try {
         const {nama, email, password, confirmPass} = req.body;
-        if (password !== confirmPass) {
-            throw new Error("password dan konfirmasi password tidak sama");
-        }
         const hashedPass = await hash(password, 10);
         // tambahkan
         const data = {
