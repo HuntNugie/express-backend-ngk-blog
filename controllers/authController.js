@@ -14,9 +14,9 @@ export const register = async (req, res) => {
             password: hashedPass,
         };
         const tambah = await Users.create({data});
-        return res.status(200).json({message: "berhasil menambahkan data"});
+        return res.status(200).json({message: "berhasil menambahkan data",status:true});
     } catch (error) {
-        return res.status(400).json({message: error.message});
+        return res.status(400).json({message: error.message,status:false});
     }
 };
 
@@ -42,9 +42,9 @@ export const login = async (req, res) => {
             sameSite:"none",
             expires: new Date(Date.now() + 1000 * 60 * 10)
         });
-        return res.status(200).json({message:"berhasil login"});
+        return res.status(200).json({message:"berhasil login",status:true});
     } catch (error) {
         console.log(error);
-        return res.status(500).json({message:"ada masalah : "+error});
+        return res.status(500).json({message:"ada masalah : "+error,status:false});
     }
 };
