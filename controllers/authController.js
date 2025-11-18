@@ -2,6 +2,7 @@ import {Users} from "../models/User.model.js";
 import {hash,compare} from "bcrypt";
 import jwt from "jsonwebtoken";
 import {config} from "dotenv";
+import { signToken } from "../utils/jwt.js";
 config();
 export const register = async (req, res) => {
     try {
@@ -32,9 +33,7 @@ export const login = async (req, res) => {
         }
 
         // buat token sudah beres
-        const token = jwt.sign({
-            "user_id" : result.id
-        },process.env.SECRET_JWT,{expiresIn:"10m"});
+        const token = signToken({"user_id" : result.id},"10m");
 
         res.cookie("token",token,{
             httpOnly:true,

@@ -13,3 +13,8 @@ export const verifikasiToken = (token) => {
     });
 };
 
+export const signToken = (payload,expire="1h") => {
+    const secret = process.env.SECRET_JWT;
+    const ttd = jwt.sign(payload, secret,{expiresIn:expire});
+    return ttd;
+};

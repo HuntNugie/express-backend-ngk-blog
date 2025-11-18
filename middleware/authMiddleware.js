@@ -10,6 +10,6 @@ export const auth = async (req, res, next) => {
         req.auth = verif;
         next();
     } catch (error) {
-        res.status(401).json({message: "token expired", status: false});
+        return res.status(401).json({message: "token expired", status: false});
     }
 };
